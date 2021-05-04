@@ -5,20 +5,26 @@ const File = require('../models/file');
 const { v4: uuidv4 } = require('uuid');
 
 let storage = multer.diskStorage({
+  // use of destination function
     destination: (req, file, cb) => cb(null, 'uploads/') ,
+    
     filename: (req, file, cb) => {
         const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
-              cb(null, uniqueName)
+              cb(null, uniqueName);
     } ,
 });
 
-let upload = multer({ storage, limits:{ fileSize: 1000000 * 100 }, }).single('myfile'); //100mb
+let upload = multer({ 
+  storage, 
+  limits:{ fileSize: 1000000 * 100 }, }).single('myfile'); //100mb
 
 router.post('/', (req, res) => {
+
     upload(req, res, async (err) => {
       if (err) {
         return res.status(500).send({ error: err.message });
       }
+      // define schema
         const file = new File({
             filename: req.file.filename,
             uuid: uuidv4(),

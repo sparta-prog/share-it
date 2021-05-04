@@ -10,4 +10,5 @@ const fileSchema = new Schema({
     receiver: { type: String, required: false },
 }, { timestamps: true });
 
+// create a collection by name file in db
 module.exports = mongoose.model('File', fileSchema);
