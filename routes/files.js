@@ -51,13 +51,14 @@ router.post('/send', async (req, res) => {
     }
     file.sender = emailFrom;
     file.receiver = emailTo;
+    // save the file
     const response = await file.save();
     // send mail
     const sendMail = require('../services/mailService');
     sendMail({
       from: emailFrom,
       to: emailTo,
-      subject: 'inShare file sharing',
+      subject: 'shareit file sharing',
       text: `${emailFrom} shared a file with you.`,
       html: require('../services/emailTemplate')({
                 emailFrom, 
